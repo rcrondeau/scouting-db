@@ -1,0 +1,9 @@
+{
+	"name": "scoutingdb-DF-2024-01-03T08-35-28Z",
+	"location": "canadacentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "0a0af8a1-d6c0-4c4a-add3-92a84edabaf1",
+		"tenantId": "2a07f419-bc1c-4500-840c-1a412e7de588"
+	}
+}
