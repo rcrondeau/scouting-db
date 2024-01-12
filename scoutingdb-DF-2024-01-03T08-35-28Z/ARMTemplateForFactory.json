@@ -1,0 +1,947 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "scoutingdb-DF-2024-01-03T08-35-28Z"
+		},
+		"scoutingdb_ds_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'scoutingdb_ds'"
+		},
+		"scoutingdb-IR-2024-01-03T08-35-28Z_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"type": "string",
+			"defaultValue": "scoutingdb.database.windows.net"
+		},
+		"scoutingdb-IR-2024-01-03T08-35-28Z_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"type": "string",
+			"defaultValue": "CloudSA7bbb5326"
+		},
+		"scoutingdb-IR-2024-01-03T08-35-28Z_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"type": "secureString"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/draftEligibleGoalies')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "draft_eligible_goalie_stats",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "draft_eligible_goalie_stats",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"goaliestats": {},
+									"draftEligibleGoalies": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/draft_eligible_goalie_stats')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sdb_eligible_goalie_stats_fy')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "scoutingdb_ds",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "eligible_goalie_stats_fy"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/scoutingdb_ds')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sdb_model_stats_goalie')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "scoutingdb_ds",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "p_key",
+						"type": "varchar"
+					},
+					{
+						"name": "Player_Height",
+						"type": "varchar"
+					},
+					{
+						"name": "height_cm",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "player_image",
+						"type": "varchar"
+					},
+					{
+						"name": "player_id",
+						"type": "varchar"
+					},
+					{
+						"name": "name",
+						"type": "varchar"
+					},
+					{
+						"name": "Position",
+						"type": "varchar"
+					},
+					{
+						"name": "draft_season",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "draft_eligible",
+						"type": "varchar"
+					},
+					{
+						"name": "years_eligible",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "age_at_draft",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "team_name",
+						"type": "varchar"
+					},
+					{
+						"name": "birthdate",
+						"type": "varchar"
+					},
+					{
+						"name": "homeplace",
+						"type": "varchar"
+					},
+					{
+						"name": "draft_key",
+						"type": "varchar"
+					},
+					{
+						"name": "season_name",
+						"type": "varchar"
+					},
+					{
+						"name": "GP",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "shots_against",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "shots_against_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "shots_against_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "goals_against",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "goals_against_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "goals_against_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "seconds_on_ice",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "seconds_on_ice_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "seconds_on_ice_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "saves",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "saves_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "saves_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "team_shots_against",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "team_shots_against_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "team_shots_against_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "team_goals_against",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "team_goals_against_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "team_goals_against_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "team_seconds_on_ice",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "team_seconds_on_ice_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "team_seconds_on_ice_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "team_saves",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "team_saves_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "team_saves_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "GAA",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "GAA_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "GAA_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Team_GAA",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Team_GAA_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Team_GAA_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "SAV",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "SAV_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "SAV_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Team_SAV",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Team_SAV_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Team_SAV_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "GAA_Diff_Team",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "GAA_Diff_Team_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "GAA_Diff_Team_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "SAV_Diff_Team",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "SAV_Diff_Team_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "SAV_Diff_Team_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "SAV_Diff_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "SAV_Diff_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "prank_sav",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "prank_sav_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "prank_sav_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "prank_gaa_diff_team",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "prank_gaa_diff_team_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "prank_gaa_diff_team_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "prank_sav_diff_team",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "prank_sav_diff_team_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "prank_sav_diff_team_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "prank_sav_diff_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "prank_sav_diff_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "zscore_sav",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "zscore_sav_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "zscore_sav_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "zscore_gaa_diff_team",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "zscore_gaa_diff_team_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "zscore_gaa_diff_team_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "zscore_sav_diff_team",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "zscore_sav_diff_team_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "zscore_sav_diff_team_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "zscore_sav_diff_50",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "zscore_sav_diff_75",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "playerId",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "first_pro_season",
+						"type": "varchar"
+					},
+					{
+						"name": "first_draft_year",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "pro_games",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "pro_sav",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "pro_gaa",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "draft_year",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "pick_number",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "nhl_team_name",
+						"type": "varchar"
+					},
+					{
+						"name": "nhl_team_code",
+						"type": "varchar"
+					},
+					{
+						"name": "amateur_league",
+						"type": "varchar"
+					},
+					{
+						"name": "years_pro",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "age_in_days",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "amateur_league_2",
+						"type": "varchar"
+					},
+					{
+						"name": "age_in_days_2",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "draft_year_2",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "pro_seasons",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "seasons_since_draft",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "pro_games_per_season",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "pro_per_sav",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "pro_per_games_per_season",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "pro_per_gaa",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "pro_sav_game",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "pro_per_sav_game",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "player_cat",
+						"type": "varchar"
+					},
+					{
+						"name": "is_drafted",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "model_stats_goalies"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/scoutingdb_ds')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/scoutingdb_ds')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('scoutingdb_ds_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/scoutingdb-IR-2024-01-03T08-35-28Z')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "Canada Central",
+						"nodeSize": "Standard_D8_v3",
+						"numberOfNodes": 1,
+						"maxParallelExecutionsPerNode": 1
+					},
+					"ssisProperties": {
+						"catalogInfo": {
+							"catalogServerEndpoint": "[parameters('scoutingdb-IR-2024-01-03T08-35-28Z_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]",
+							"catalogAdminUserName": "[parameters('scoutingdb-IR-2024-01-03T08-35-28Z_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName')]",
+							"catalogAdminPassword": {
+								"type": "SecureString",
+								"value": "[parameters('scoutingdb-IR-2024-01-03T08-35-28Z_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
+							},
+							"catalogPricingTier": "S1"
+						},
+						"edition": "Standard",
+						"licenseType": "BasePrice"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/draft_eligible_goalie_stats')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "sdb_model_stats_goalie",
+								"type": "DatasetReference"
+							},
+							"name": "goaliestats"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "sdb_eligible_goalie_stats_fy",
+								"type": "DatasetReference"
+							},
+							"name": "draftEligibleGoalies"
+						}
+					],
+					"transformations": [
+						{
+							"name": "removeColumns"
+						},
+						{
+							"name": "draftEligibleFirst"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          p_key as string,",
+						"          Player_Height as string,",
+						"          height_cm as double,",
+						"          player_image as string,",
+						"          player_id as string,",
+						"          name as string,",
+						"          Position as string,",
+						"          draft_season as double,",
+						"          draft_eligible as string,",
+						"          years_eligible as double,",
+						"          age_at_draft as double,",
+						"          team_name as string,",
+						"          birthdate as string,",
+						"          homeplace as string,",
+						"          draft_key as string,",
+						"          season_name as string,",
+						"          GP as integer,",
+						"          shots_against as double,",
+						"          shots_against_50 as double,",
+						"          shots_against_75 as double,",
+						"          goals_against as double,",
+						"          goals_against_50 as double,",
+						"          goals_against_75 as double,",
+						"          seconds_on_ice as double,",
+						"          seconds_on_ice_50 as double,",
+						"          seconds_on_ice_75 as double,",
+						"          saves as double,",
+						"          saves_50 as double,",
+						"          saves_75 as double,",
+						"          team_shots_against as double,",
+						"          team_shots_against_50 as double,",
+						"          team_shots_against_75 as double,",
+						"          team_goals_against as double,",
+						"          team_goals_against_50 as double,",
+						"          team_goals_against_75 as double,",
+						"          team_seconds_on_ice as double,",
+						"          team_seconds_on_ice_50 as double,",
+						"          team_seconds_on_ice_75 as double,",
+						"          team_saves as double,",
+						"          team_saves_50 as double,",
+						"          team_saves_75 as double,",
+						"          GAA as double,",
+						"          GAA_50 as double,",
+						"          GAA_75 as double,",
+						"          Team_GAA as double,",
+						"          Team_GAA_50 as double,",
+						"          Team_GAA_75 as double,",
+						"          SAV as double,",
+						"          SAV_50 as double,",
+						"          SAV_75 as double,",
+						"          Team_SAV as double,",
+						"          Team_SAV_50 as double,",
+						"          Team_SAV_75 as double,",
+						"          GAA_Diff_Team as double,",
+						"          GAA_Diff_Team_50 as double,",
+						"          GAA_Diff_Team_75 as double,",
+						"          SAV_Diff_Team as double,",
+						"          SAV_Diff_Team_50 as double,",
+						"          SAV_Diff_Team_75 as double,",
+						"          SAV_Diff_50 as double,",
+						"          SAV_Diff_75 as double,",
+						"          prank_sav as double,",
+						"          prank_sav_50 as double,",
+						"          prank_sav_75 as double,",
+						"          prank_gaa_diff_team as double,",
+						"          prank_gaa_diff_team_50 as double,",
+						"          prank_gaa_diff_team_75 as double,",
+						"          prank_sav_diff_team as double,",
+						"          prank_sav_diff_team_50 as double,",
+						"          prank_sav_diff_team_75 as double,",
+						"          prank_sav_diff_50 as double,",
+						"          prank_sav_diff_75 as double,",
+						"          zscore_sav as double,",
+						"          zscore_sav_50 as double,",
+						"          zscore_sav_75 as double,",
+						"          zscore_gaa_diff_team as double,",
+						"          zscore_gaa_diff_team_50 as double,",
+						"          zscore_gaa_diff_team_75 as double,",
+						"          zscore_sav_diff_team as double,",
+						"          zscore_sav_diff_team_50 as double,",
+						"          zscore_sav_diff_team_75 as double,",
+						"          zscore_sav_diff_50 as double,",
+						"          zscore_sav_diff_75 as double,",
+						"          playerId as double,",
+						"          first_pro_season as string,",
+						"          first_draft_year as double,",
+						"          pro_games as double,",
+						"          pro_sav as double,",
+						"          pro_gaa as double,",
+						"          draft_year as double,",
+						"          pick_number as double,",
+						"          nhl_team_name as string,",
+						"          nhl_team_code as string,",
+						"          amateur_league as string,",
+						"          years_pro as double,",
+						"          age_in_days as double,",
+						"          amateur_league_2 as string,",
+						"          age_in_days_2 as double,",
+						"          draft_year_2 as double,",
+						"          pro_seasons as double,",
+						"          seasons_since_draft as double,",
+						"          pro_games_per_season as double,",
+						"          pro_per_sav as double,",
+						"          pro_per_games_per_season as double,",
+						"          pro_per_gaa as double,",
+						"          pro_sav_game as double,",
+						"          pro_per_sav_game as double,",
+						"          player_cat as string,",
+						"          is_drafted as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> goaliestats",
+						"goaliestats select(mapColumn(",
+						"          p_key,",
+						"          Player_Height,",
+						"          height_cm,",
+						"          player_id,",
+						"          name,",
+						"          Position,",
+						"          draft_season,",
+						"          draft_eligible,",
+						"          years_eligible,",
+						"          age_at_draft,",
+						"          team_name,",
+						"          birthdate,",
+						"          homeplace,",
+						"          draft_key,",
+						"          season_name,",
+						"          GP,",
+						"          shots_against,",
+						"          shots_against_50,",
+						"          shots_against_75,",
+						"          goals_against,",
+						"          goals_against_50,",
+						"          goals_against_75,",
+						"          seconds_on_ice,",
+						"          seconds_on_ice_50,",
+						"          seconds_on_ice_75,",
+						"          saves,",
+						"          saves_50,",
+						"          saves_75,",
+						"          team_shots_against,",
+						"          team_shots_against_50,",
+						"          team_shots_against_75,",
+						"          team_goals_against,",
+						"          team_goals_against_50,",
+						"          team_goals_against_75,",
+						"          team_seconds_on_ice,",
+						"          team_seconds_on_ice_50,",
+						"          team_seconds_on_ice_75,",
+						"          team_saves,",
+						"          team_saves_50,",
+						"          team_saves_75,",
+						"          GAA,",
+						"          GAA_50,",
+						"          GAA_75,",
+						"          Team_GAA,",
+						"          Team_GAA_50,",
+						"          Team_GAA_75,",
+						"          SAV,",
+						"          SAV_50,",
+						"          SAV_75,",
+						"          Team_SAV,",
+						"          Team_SAV_50,",
+						"          Team_SAV_75,",
+						"          GAA_Diff_Team,",
+						"          GAA_Diff_Team_50,",
+						"          GAA_Diff_Team_75,",
+						"          SAV_Diff_Team,",
+						"          SAV_Diff_Team_50,",
+						"          SAV_Diff_Team_75,",
+						"          SAV_Diff_50,",
+						"          SAV_Diff_75,",
+						"          prank_sav,",
+						"          prank_sav_50,",
+						"          prank_sav_75,",
+						"          prank_gaa_diff_team,",
+						"          prank_gaa_diff_team_50,",
+						"          prank_gaa_diff_team_75,",
+						"          prank_sav_diff_team,",
+						"          prank_sav_diff_team_50,",
+						"          prank_sav_diff_team_75,",
+						"          prank_sav_diff_50,",
+						"          prank_sav_diff_75,",
+						"          zscore_sav,",
+						"          zscore_sav_50,",
+						"          zscore_sav_75,",
+						"          zscore_gaa_diff_team,",
+						"          zscore_gaa_diff_team_50,",
+						"          zscore_gaa_diff_team_75,",
+						"          zscore_sav_diff_team,",
+						"          zscore_sav_diff_team_50,",
+						"          zscore_sav_diff_team_75,",
+						"          zscore_sav_diff_50,",
+						"          zscore_sav_diff_75,",
+						"          age_in_days,",
+						"          player_cat,",
+						"          is_drafted",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> removeColumns",
+						"removeColumns filter(draft_eligible == 'Y' && years_eligible == 1) ~> draftEligibleFirst",
+						"draftEligibleFirst sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     recreate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> draftEligibleGoalies"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/sdb_model_stats_goalie')]",
+				"[concat(variables('factoryId'), '/datasets/sdb_eligible_goalie_stats_fy')]"
+			]
+		}
+	]
+}

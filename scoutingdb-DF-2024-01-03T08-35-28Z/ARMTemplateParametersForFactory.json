@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "scoutingdb-DF-2024-01-03T08-35-28Z"
+		},
+		"scoutingdb_ds_connectionString": {
+			"value": ""
+		},
+		"scoutingdb-IR-2024-01-03T08-35-28Z_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"value": "scoutingdb.database.windows.net"
+		},
+		"scoutingdb-IR-2024-01-03T08-35-28Z_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"value": "CloudSA7bbb5326"
+		},
+		"scoutingdb-IR-2024-01-03T08-35-28Z_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"value": ""
+		}
+	}
+}
