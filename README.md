@@ -1,3 +1,3 @@
 # scouting-db
 
-# this is a test repository for my data factory pipeline
+# This is my repository for my Data Factory testing
