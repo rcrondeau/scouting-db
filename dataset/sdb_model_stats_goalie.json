@@ -1,0 +1,543 @@
+{
+	"name": "sdb_model_stats_goalie",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "scoutingdb_ds",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "p_key",
+				"type": "varchar"
+			},
+			{
+				"name": "Player_Height",
+				"type": "varchar"
+			},
+			{
+				"name": "height_cm",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "player_image",
+				"type": "varchar"
+			},
+			{
+				"name": "player_id",
+				"type": "varchar"
+			},
+			{
+				"name": "name",
+				"type": "varchar"
+			},
+			{
+				"name": "Position",
+				"type": "varchar"
+			},
+			{
+				"name": "draft_season",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "draft_eligible",
+				"type": "varchar"
+			},
+			{
+				"name": "years_eligible",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "age_at_draft",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "team_name",
+				"type": "varchar"
+			},
+			{
+				"name": "birthdate",
+				"type": "varchar"
+			},
+			{
+				"name": "homeplace",
+				"type": "varchar"
+			},
+			{
+				"name": "draft_key",
+				"type": "varchar"
+			},
+			{
+				"name": "season_name",
+				"type": "varchar"
+			},
+			{
+				"name": "GP",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "shots_against",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "shots_against_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "shots_against_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "goals_against",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "goals_against_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "goals_against_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "seconds_on_ice",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "seconds_on_ice_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "seconds_on_ice_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "saves",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "saves_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "saves_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "team_shots_against",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "team_shots_against_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "team_shots_against_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "team_goals_against",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "team_goals_against_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "team_goals_against_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "team_seconds_on_ice",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "team_seconds_on_ice_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "team_seconds_on_ice_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "team_saves",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "team_saves_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "team_saves_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "GAA",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "GAA_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "GAA_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Team_GAA",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Team_GAA_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Team_GAA_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "SAV",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "SAV_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "SAV_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Team_SAV",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Team_SAV_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Team_SAV_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "GAA_Diff_Team",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "GAA_Diff_Team_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "GAA_Diff_Team_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "SAV_Diff_Team",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "SAV_Diff_Team_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "SAV_Diff_Team_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "SAV_Diff_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "SAV_Diff_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "prank_sav",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "prank_sav_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "prank_sav_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "prank_gaa_diff_team",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "prank_gaa_diff_team_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "prank_gaa_diff_team_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "prank_sav_diff_team",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "prank_sav_diff_team_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "prank_sav_diff_team_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "prank_sav_diff_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "prank_sav_diff_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "zscore_sav",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "zscore_sav_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "zscore_sav_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "zscore_gaa_diff_team",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "zscore_gaa_diff_team_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "zscore_gaa_diff_team_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "zscore_sav_diff_team",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "zscore_sav_diff_team_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "zscore_sav_diff_team_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "zscore_sav_diff_50",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "zscore_sav_diff_75",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "playerId",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "first_pro_season",
+				"type": "varchar"
+			},
+			{
+				"name": "first_draft_year",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pro_games",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pro_sav",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pro_gaa",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "draft_year",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pick_number",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "nhl_team_name",
+				"type": "varchar"
+			},
+			{
+				"name": "nhl_team_code",
+				"type": "varchar"
+			},
+			{
+				"name": "amateur_league",
+				"type": "varchar"
+			},
+			{
+				"name": "years_pro",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "age_in_days",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "amateur_league_2",
+				"type": "varchar"
+			},
+			{
+				"name": "age_in_days_2",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "draft_year_2",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pro_seasons",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "seasons_since_draft",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pro_games_per_season",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pro_per_sav",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pro_per_games_per_season",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pro_per_gaa",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pro_sav_game",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pro_per_sav_game",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "player_cat",
+				"type": "varchar"
+			},
+			{
+				"name": "is_drafted",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "model_stats_goalies"
+		}
+	}
+}
