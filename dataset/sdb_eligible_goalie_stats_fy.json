@@ -1,0 +1,16 @@
+{
+	"name": "sdb_eligible_goalie_stats_fy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "scoutingdb_ds",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "eligible_goalie_stats_fy"
+		}
+	}
+}
