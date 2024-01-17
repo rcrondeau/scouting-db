@@ -877,7 +877,7 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> removeColumns",
-						"removeColumns filter(draft_eligible == 'Y' && years_eligible == 1) ~> draftEligibleFirst",
+						"removeColumns filter(draft_eligible == 'Y' && seconds_on_ice >= 38000) ~> draftEligibleFirst",
 						"draftEligibleFirst sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
